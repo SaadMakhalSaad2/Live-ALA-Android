@@ -1,9 +1,10 @@
-package com.example.liveala;
+package com.example.liveala.fragments;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.liveala.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;

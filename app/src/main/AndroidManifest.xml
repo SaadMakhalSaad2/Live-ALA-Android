@@ -10,9 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LiveALA">
         <activity
-            android:name=".Home"
+            android:name=".fragments.Home"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.LiveALA.NoActionBar"></activity>
+            android:theme="@style/Theme.LiveALA.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.Design.NoActionBar">

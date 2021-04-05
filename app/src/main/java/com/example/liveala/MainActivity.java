@@ -1,13 +1,12 @@
 package com.example.liveala;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.Toast;
+
+import com.example.liveala.fragments.Home;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -5,4 +5,17 @@
         <item name="android:textSize">28sp</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
+
+    <style name="title_2">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+
+    <style name="card_1">
+        <item name="cardElevation">4dp</item>
+        <item name="cardCornerRadius">4dp</item>
+        <item name="background">@color/colorAccentLight</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>

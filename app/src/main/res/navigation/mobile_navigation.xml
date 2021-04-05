@@ -9,6 +9,23 @@
         android:id="@+id/nav_home"
         android:name="com.example.liveala.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_newInspection"
+            app:destination="@id/newInspection" />
+        <action
+            android:id="@+id/action_nav_home_to_previousInspections"
+            app:destination="@id/previousInspections" />
+    </fragment>
+    <fragment
+        android:id="@+id/newInspection"
+        android:name="com.example.liveala.fragments.NewInspection"
+        android:label="fragment_new_inspection"
+        tools:layout="@layout/fragment_new_inspection" />
+    <fragment
+        android:id="@+id/previousInspections"
+        android:name="com.example.liveala.fragments.PreviousInspections"
+        android:label="fragment_previous_inspections"
+        tools:layout="@layout/fragment_previous_inspections" />
 
 </navigation>
