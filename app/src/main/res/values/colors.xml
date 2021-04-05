@@ -10,5 +10,7 @@
     <color name="colorPrimary">#7e2328</color>
     <color name="colorAccent">#ab9562</color>
     <color name="colorAccentLight">#fcf6d2</color>
+    <color name="colorAccentLight2">#fcf6d2</color>
+
 
 </resources>
