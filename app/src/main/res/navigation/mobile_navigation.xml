@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.liveala.HomeFragment"
+        android:name="com.example.liveala.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -20,12 +20,25 @@
     <fragment
         android:id="@+id/newInspection"
         android:name="com.example.liveala.fragments.NewInspection"
-        android:label="fragment_new_inspection"
-        tools:layout="@layout/fragment_new_inspection" />
+        android:label="New Inspection"
+        tools:layout="@layout/fragment_new_inspection" >
+        <action
+            android:id="@+id/action_newInspection_to_addNewInspection"
+            app:destination="@id/addNewInspection" />
+    </fragment>
     <fragment
         android:id="@+id/previousInspections"
         android:name="com.example.liveala.fragments.PreviousInspections"
-        android:label="fragment_previous_inspections"
+        android:label="Previous Inspections"
         tools:layout="@layout/fragment_previous_inspections" />
+    <fragment
+        android:id="@+id/addNewInspection"
+        android:name="com.example.liveala.fragments.AddNewInspection"
+        android:label="New Inspection"
+        tools:layout="@layout/fragment_add_new_inspection" >
+        <argument
+            android:name="hallName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

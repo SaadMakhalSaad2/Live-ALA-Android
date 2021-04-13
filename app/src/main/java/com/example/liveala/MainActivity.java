@@ -3,11 +3,8 @@ package com.example.liveala;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.LinkAddress;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,12 +14,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.liveala.Utils.Models.Pref;
 import com.example.liveala.Utils.Models.UserProfile;
-import com.example.liveala.fragments.Home;
+import com.example.liveala.Activities.Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -79,12 +74,7 @@ public class MainActivity extends AppCompatActivity {
         contLogo.startAnimation(zoomOut);
 
         Button loginBtn = findViewById(R.id.button_login);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+        loginBtn.setOnClickListener(v -> login());
 
     }
 
@@ -134,9 +124,10 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserProfile profile = snapshot.getValue(UserProfile.class);
 
-                if (profile.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                if (profile.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                     Pref.setValue(MainActivity.this, USER_PROFILE, new Gson().toJson(profile));
-
+                    startActivity(new Intent(MainActivity.this, Home.class));
+                }
             }
 
             @Override
@@ -145,8 +136,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        startActivity(new Intent(MainActivity.this, Home.class));
 
     }
 

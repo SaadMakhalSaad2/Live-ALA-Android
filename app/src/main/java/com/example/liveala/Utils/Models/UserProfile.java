@@ -5,11 +5,21 @@ import java.io.Serializable;
 public class UserProfile implements Serializable {
     public String userType;
     public String email;
+    public String hall;
+    public String room;
     public String name;
     public String id;
     public String imageUrl;
 
     public UserProfile() {
+    }
+
+    public String getHall() {
+        return hall;
+    }
+
+    public String getRoom() {
+        return room;
     }
 
     public String getImageUrl() {

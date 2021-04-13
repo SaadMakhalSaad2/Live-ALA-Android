@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="16dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/student_name_inspecting"
+            style="@style/title_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Inspecting Saad Mankarioius"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        style="@style/title_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_button"
+                        android:padding="8dp"
+                        android:paddingLeft="8dp"
+                        android:text="Floor:"
+                        android:textColor="@color/white"
+                        android:textStyle="" />
+
+                    <Spinner
+                        android:id="@+id/floor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/curve_accent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp">
+
+                    <TextView
+                        style="@style/title_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_button"
+                        android:padding="8dp"
+                        android:paddingLeft="8dp"
+                        android:text="Beds:"
+                        android:textColor="@color/white"
+                        android:textStyle="" />
+
+                    <Spinner
+                        android:id="@+id/beds"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/curve_accent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        style="@style/title_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_button"
+                        android:padding="8dp"
+                        android:paddingLeft="8dp"
+                        android:text="Dinning Hall items:"
+                        android:textColor="@color/white"
+                        android:textStyle="" />
+
+                    <Spinner
+                        android:id="@+id/dinning_hall_items_dialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/curve_accent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        style="@style/title_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_button"
+                        android:padding="8dp"
+                        android:paddingLeft="8dp"
+                        android:text="Disk Clean:"
+                        android:textColor="@color/white"
+                        android:textStyle="" />
+
+                    <Spinner
+                        android:id="@+id/disk_clean"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/curve_accent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        style="@style/title_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_button"
+                        android:padding="8dp"
+                        android:paddingLeft="8dp"
+                        android:text="Bin Empty:"
+                        android:textColor="@color/white"
+                        android:textStyle="" />
+
+                    <Spinner
+                        android:id="@+id/bin_empty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/curve_accent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        style="@style/title_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_button"
+                        android:padding="8dp"
+                        android:paddingLeft="8dp"
+                        android:text="Clothing Lying Around:"
+                        android:textColor="@color/white"
+                        android:textStyle="" />
+
+                    <Spinner
+                        android:id="@+id/clothing_lying_around"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/curve_accent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        style="@style/title_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_button"
+                        android:padding="8dp"
+                        android:paddingLeft="8dp"
+                        android:text="Heater:"
+                        android:textColor="@color/white"
+                        android:textStyle="" />
+
+                    <Spinner
+                        android:id="@+id/heater"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/curve_accent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        style="@style/title_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_button"
+                        android:padding="8dp"
+                        android:paddingLeft="8dp"
+                        android:text="Window Seal:"
+                        android:textColor="@color/white"
+                        android:textStyle="" />
+
+                    <Spinner
+                        android:id="@+id/window_seal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/curve_accent" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        style="@style/title_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/background_button"
+                        android:padding="8dp"
+                        android:paddingLeft="8dp"
+                        android:text="Spoilt Food:"
+                        android:textColor="@color/white"
+                        android:textStyle="" />
+
+                    <Spinner
+                        android:id="@+id/spoilt_food"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/curve_accent" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/button_save_inspection_dialog"
+                android:layout_width="0dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                style="@style/button_primary"
+                android:layout_height="wrap_content"
+                android:text="Save"
+
+                />
+
+            <Button
+                android:id="@+id/button_exit_inspection_dialog"
+                android:layout_margin="8dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/button_primary"
+                android:layout_height="wrap_content"
+                android:text="Exit"
+
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

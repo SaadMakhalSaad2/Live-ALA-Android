@@ -1,14 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     tools:context=".fragments.NewInspection">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/grid_view"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/title_3"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Choose the hall you are inspecting"
+                android:textColor="@color/colorAccent" />
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:columnCount="2"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="48dp"
+                android:rowCount="2"
+                android:scrollbars="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/titans"
+                    style="@style/card_2"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Titans" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/athens"
+                    style="@style/card_2"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Athens" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/clasified"
+                    style="@style/card_2"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Classified" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/card_2"
+                    android:id="@+id/gaga"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Gaga" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/card_2"
+                    android:id="@+id/jeshi"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Jeshi" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/card_2"
+                    android:id="@+id/keza"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Keza" />
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    style="@style/card_2"
+                    android:id="@+id/kushinga"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Kushinga" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/card_2"
+                    android:id="@+id/malaika"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Malaika" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/card_2"
+                    android:id="@+id/office"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Office" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/card_2"
+                    android:id="@+id/olympus"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Olympus" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/card_2"
+                    android:id="@+id/twawana"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Twawana" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    style="@style/card_2"
+                    android:id="@+id/valkyrie"
+                    android:layout_columnWeight="1"
+                    android:backgroundTint="@color/colorAccentLight"
+                    tools:targetApi="lollipop">
+
+                    <TextView
+                        style="@style/title_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Valkyrie" />
+
+                </androidx.cardview.widget.CardView>
+
+
+            </GridLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

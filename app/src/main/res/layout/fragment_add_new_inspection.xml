@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".fragments.AddNewInspection">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progress_load_students"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp" />
+
+            <TextView
+                android:id="@+id/text_inspection_for"
+                style="@style/title_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="Inspection for "
+                android:textColor="@color/colorAccent" />
+
+            <LinearLayout
+                android:id="@+id/cont_inspection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <Button
+                    android:id="@+id/button_general_hall_rubric"
+                    style="@style/button_primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Common Space Inspection" />
+
+                <LinearLayout
+                    android:id="@+id/cont_general_inespeciton_elements"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        tools:ignore="UselessParent">
+
+                        <TextView
+                            style="@style/title_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/background_button"
+                            android:padding="8dp"
+                            android:paddingLeft="8dp"
+                            android:text="Fridge:"
+                            android:textColor="@color/white"
+                            android:textStyle="" />
+
+                        <Spinner
+                            android:id="@+id/fridge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/curve_accent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        tools:ignore="UselessParent">
+
+                        <TextView
+                            style="@style/title_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/background_button"
+                            android:padding="8dp"
+                            android:paddingLeft="8dp"
+                            android:text="Dirty Kitchen"
+                            android:textColor="@color/white"
+                            android:textStyle="" />
+
+                        <Spinner
+                            android:id="@+id/kitchen"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/curve_accent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        tools:ignore="UselessParent">
+
+                        <TextView
+                            style="@style/title_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/background_button"
+                            android:padding="8dp"
+                            android:paddingLeft="8dp"
+                            android:text="Dinning Hall Items"
+                            android:textColor="@color/white"
+                            android:textStyle="" />
+
+                        <Spinner
+                            android:id="@+id/dinning_hall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/curve_accent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        tools:ignore="UselessParent">
+
+                        <TextView
+                            style="@style/title_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/background_button"
+                            android:padding="8dp"
+                            android:paddingLeft="8dp"
+                            android:text="Broom Cupboard"
+                            android:textColor="@color/white"
+                            android:textStyle="" />
+
+                        <Spinner
+                            android:id="@+id/broom_cupboard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/curve_accent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        tools:ignore="UselessParent">
+
+                        <TextView
+                            style="@style/title_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/background_button"
+                            android:padding="8dp"
+                            android:paddingLeft="8dp"
+                            android:text="Microwave Oven:"
+                            android:textColor="@color/white"
+                            android:textStyle="" />
+
+                        <Spinner
+                            android:id="@+id/microwave"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/curve_accent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        tools:ignore="UselessParent">
+
+                        <TextView
+                            style="@style/title_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/background_button"
+                            android:padding="8dp"
+                            android:paddingLeft="8dp"
+                            android:text="Hall Way:"
+                            android:textColor="@color/white"
+                            android:textStyle="" />
+
+                        <Spinner
+                            android:id="@+id/hall_way"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/curve_accent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        tools:ignore="UselessParent">
+
+                        <TextView
+                            style="@style/title_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/background_button"
+                            android:padding="8dp"
+                            android:paddingLeft="8dp"
+                            android:text="Linen Change:"
+                            android:textColor="@color/white"
+                            android:textStyle="" />
+
+                        <Spinner
+                            android:id="@+id/linen_change"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/curve_accent" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        tools:ignore="UselessParent">
+
+                        <TextView
+                            style="@style/title_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/background_button"
+                            android:padding="8dp"
+                            android:paddingLeft="8dp"
+                            android:text="Inspection Report:"
+                            android:textColor="@color/white"
+                            android:textStyle="" />
+
+                        <Spinner
+                            android:id="@+id/inspection_report"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/curve_accent" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button_save_inspection_general"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginRight="32dp"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/green"
+                        android:text="Save"
+                        android:textAllCaps="false" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button_rooms_inspeciton"
+                    style="@style/button_primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Rooms Inspection" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:id="@+id/cont_rooms_inspection"
+                    >
+
+                <ListView
+                    android:visibility="gone"
+                    android:id="@+id/list_rooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:divider="@color/transparent" />
+
+                <Button
+                    android:enabled="false"
+                    android:id="@+id/button_save_rooms_inspection"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/green"
+                    android:text="Save"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/no_data"
+                style="@style/title_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="No Data!"
+                android:textColor="@color/colorAccent"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>
