@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="8dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -279,38 +280,38 @@
                 </LinearLayout>
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorAccent">
+
+                    <Button
+                        android:id="@+id/button_save_inspection_dialog"
+                        style="@style/button_primary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="Save"
+
+                        />
+
+                    <Button
+                        android:id="@+id/button_exit_inspection_dialog"
+                        style="@style/button_primary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="Exit"
+
+                        />
+
+                </LinearLayout>
             </LinearLayout>
 
         </ScrollView>
-
-        <LinearLayout
-            android:layout_marginTop="8dp"
-            android:background="@color/colorAccent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/button_save_inspection_dialog"
-                android:layout_width="0dp"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                style="@style/button_primary"
-                android:layout_height="wrap_content"
-                android:text="Save"
-
-                />
-
-            <Button
-                android:id="@+id/button_exit_inspection_dialog"
-                android:layout_margin="8dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                style="@style/button_primary"
-                android:layout_height="wrap_content"
-                android:text="Exit"
-
-                />
-
-        </LinearLayout>
 
     </LinearLayout>
 

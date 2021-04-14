@@ -21,7 +21,9 @@
 
             <TextView
                 android:id="@+id/student_name"
-                style="@style/title_1"
+                style="@style/title_2"
+                android:textStyle="normal"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Moodie Wael"
@@ -30,43 +32,70 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_history"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_last_inpsected"
+                style="@style/title_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:text="April 5"
+                android:textColor="@color/colorAccent"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/image_inspection_done"
                 android:layout_width="100px"
                 android:layout_height="100px"
                 android:layout_gravity="right"
                 android:src="@drawable/ic_marked"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:paddingLeft="16dp"
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                >
+                android:paddingLeft="16dp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/first_student_name"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/grey"-->
-<!--                    android:layout_marginTop="4dp"-->
-<!--                    android:textSize="26sp"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Saad Mankarious"-->
-<!--                    />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/first_student_name"-->
+                <!--                    android:textStyle="bold"-->
+                <!--                    android:textColor="@color/grey"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:textSize="26sp"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="Saad Mankarious"-->
+                <!--                    />-->
 
-<!--                <TextView-->
-<!--                    android:id="@+id/second_student_name"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:textColor="@color/grey"-->
-<!--                    android:layout_marginTop="4dp"-->
-<!--                    android:textSize="26sp"-->
-<!--                    android:layout_marginBottom="8dp"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Ahmed Sameh"-->
-<!--                    />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/second_student_name"-->
+                <!--                    android:textStyle="bold"-->
+                <!--                    android:textColor="@color/grey"-->
+                <!--                    android:layout_marginTop="4dp"-->
+                <!--                    android:textSize="26sp"-->
+                <!--                    android:layout_marginBottom="8dp"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="Ahmed Sameh"-->
+                <!--                    />-->
 
 
             </LinearLayout>

@@ -1,16 +1,23 @@
 package com.example.liveala.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -21,6 +28,7 @@ import android.widget.Toast;
 import com.example.liveala.R;
 import com.example.liveala.Utils.Adapters.RoomAdapter;
 import com.example.liveala.Utils.Models.GeneralInspection;
+import com.example.liveala.Utils.Models.IndividualInspection;
 import com.example.liveala.Utils.Models.Pref;
 import com.example.liveala.Utils.Models.Score;
 import com.example.liveala.Utils.Models.UserProfile;
@@ -44,7 +52,7 @@ public class AddNewInspection extends Fragment {
 
     String hallName = "";
     boolean general_expanded, individuals_expanded;
-    Button general, buttonRoomsInspection, saveGeneral, saveRooms;
+    Button general, buttonRoomsInspection, saveGeneral;
     LinearLayout inspectionContent, contbuttonRoomsInspection;
     TextView inspectionfor;
     LinearLayout generalElements;
@@ -69,6 +77,7 @@ public class AddNewInspection extends Fragment {
 
     private void downloadStudents() {
         FirebaseDatabase.getInstance().getReference("profiles").addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
@@ -79,10 +88,11 @@ public class AddNewInspection extends Fragment {
                 }
                 progressBar.setVisibility(View.GONE);
                 if (!students.isEmpty()) {
-                    RoomAdapter adp = new RoomAdapter(getActivity(), R.layout.item_room, (ArrayList<UserProfile>) students);
+                    RoomAdapter adp = new RoomAdapter(getActivity(), R.layout.item_room, (ArrayList<UserProfile>) students, userProfile, getActivity());
                     rooms.setAdapter(adp);
                     inspectionContent.setVisibility(View.VISIBLE);
                     noData.setVisibility(View.GONE);
+                    setListener();
 
                 } else {
                     noData.setVisibility(View.VISIBLE);
@@ -96,10 +106,206 @@ public class AddNewInspection extends Fragment {
         });
     }
 
+    UserProfile student;
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void setListener() {
+        rooms.setOnItemClickListener((parent, view, position, id) -> {
+            student = students.get(position);
+            showPopUp();
+        });
+    }
+
+    View dialogView;
+    Button save, exit;
+    AlertDialog dialog;
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @SuppressLint("SetTextI18n")
+    private void showPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        View view = getLayoutInflater().inflate(R.layout.popup_window, null);
+        builder.setView(view);
+        dialogView = view;
+
+        TextView studentName = view.findViewById(R.id.student_name_inspecting);
+        studentName.setText("Inspecting " + student.getName());
+
+        save = view.findViewById(R.id.button_save_inspection_dialog);
+        exit = view.findViewById(R.id.button_exit_inspection_dialog);
+
+        exit.setOnClickListener(v -> showSnackDialog("Press long on the button to exit"));
+
+        exit.setOnLongClickListener(v -> {
+            dialog.cancel();
+            return true;
+        });
+
+        save.setOnClickListener(v -> {
+            if (!ensureDataIndividualInspection()) {
+                showSnackDialog("You need to complete all criteria first");
+                return;
+            }
+
+            sendIndividualInspection();
+        });
+
+        setupSpinners(view);
+
+        builder.setOnCancelListener(dialog2 -> Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show());
+
+        dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    private void showSnackDialog(String message) {
+        Snackbar snack = Snackbar.make(dialogView, message, Snackbar.LENGTH_LONG);
+        View view = snack.getView();
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) view.getLayoutParams();
+        params.gravity = Gravity.BOTTOM;
+        params.bottomMargin = 100;
+        view.setLayoutParams(params);
+        snack.show();
+    }
+
+    private void sendIndividualInspection() {
+        calculateScore();
+
+        IndividualInspection inspection = new IndividualInspection(student,
+                userProfile,
+                new Date(),
+                total,
+                scores);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("individuals_inspections");
+        reference.push().setValue(inspection).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                updateLastInspected();
+            } else {
+                Snackbar.make(getActivity().findViewById(android.R.id.content), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    List<Score> scores;
+    int total;
+
+    private void calculateScore() {
+        scores = new ArrayList<>();
+        total = 0;
+
+        Score floorScore = new Score("floor", Integer.parseInt(floor.getSelectedItem().toString()));
+        scores.add(floorScore);
+        total += Integer.parseInt(floor.getSelectedItem().toString());
+
+        Score bedsScore = new Score("beds", Integer.parseInt(beds.getSelectedItem().toString()));
+        scores.add(bedsScore);
+        total += Integer.parseInt(beds.getSelectedItem().toString());
+
+        Score dinningHallScore = new Score("dinning hall items", Integer.parseInt(dinningHall.getSelectedItem().toString()));
+        scores.add(dinningHallScore);
+        total += Integer.parseInt(dinningHall.getSelectedItem().toString());
+
+        Score diskCleanScore = new Score("disk clean", Integer.parseInt(disk.getSelectedItem().toString()));
+        scores.add(diskCleanScore);
+        total += Integer.parseInt(disk.getSelectedItem().toString());
+
+        Score binEmptyScore = new Score("bin empty", Integer.parseInt(bin.getSelectedItem().toString()));
+        scores.add(binEmptyScore);
+        total += Integer.parseInt(bin.getSelectedItem().toString());
+
+        Score clothingLyingAroundScore = new Score("clothing lying around", Integer.parseInt(clothing.getSelectedItem().toString()));
+        scores.add(clothingLyingAroundScore);
+        total += Integer.parseInt(clothing.getSelectedItem().toString());
+
+        Score heaterScore = new Score("heater", Integer.parseInt(heater.getSelectedItem().toString()));
+        scores.add(heaterScore);
+        total += Integer.parseInt(heater.getSelectedItem().toString());
+
+        Score windowSealScore = new Score("window seal", Integer.parseInt(window.getSelectedItem().toString()));
+        scores.add(windowSealScore);
+        total += Integer.parseInt(window.getSelectedItem().toString());
+
+        Score spoiltFoodScore = new Score("spoilt food", Integer.parseInt(spoiltFood.getSelectedItem().toString()));
+        scores.add(spoiltFoodScore);
+        total += Integer.parseInt(spoiltFood.getSelectedItem().toString());
+
+    }
+
+    private boolean ensureDataIndividualInspection() {
+        boolean valid = false;
+        if (floor.getSelectedItemPosition() != 0 &&
+                beds.getSelectedItemPosition() != 0 &&
+                dinningHall.getSelectedItemPosition() != 0 &&
+                disk.getSelectedItemPosition() != 0 &&
+                clothing.getSelectedItemPosition() != 0 &&
+                heater.getSelectedItemPosition() != 0 &&
+                window.getSelectedItemPosition() != 0 &&
+                spoiltFood.getSelectedItemPosition() != 0)
+            valid = true;
+
+        return valid;
+    }
+
+    Spinner floor, beds, dinningHall, disk, bin, clothing, heater, window, spoiltFood;
+
+    private void setupSpinners(View view) {
+        String[] scores_2 = getActivity().getResources().getStringArray(R.array.scores_2);
+        String[] scores_4 = getActivity().getResources().getStringArray(R.array.scores_4);
+
+        floor = view.findViewById(R.id.floor);
+        beds = view.findViewById(R.id.beds);
+        dinningHall = view.findViewById(R.id.dinning_hall_items_dialog);
+        disk = view.findViewById(R.id.disk_clean);
+        bin = view.findViewById(R.id.bin_empty);
+        clothing = view.findViewById(R.id.clothing_lying_around);
+        heater = view.findViewById(R.id.heater);
+        window = view.findViewById(R.id.window_seal);
+        spoiltFood = view.findViewById(R.id.spoilt_food);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_2);
+        adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        floor.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_2);
+        adapter2.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        disk.setAdapter(adapter2);
+
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_2);
+        adapter3.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        clothing.setAdapter(adapter3);
+
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_2);
+        adapter4.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        heater.setAdapter(adapter4);
+
+        ArrayAdapter<String> adapter5 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_2);
+        adapter5.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        spoiltFood.setAdapter(adapter5);
+
+        ArrayAdapter<String> adapter6 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_4);
+        adapter6.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        beds.setAdapter(adapter6);
+
+        ArrayAdapter<String> adapter7 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_4);
+        adapter7.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        dinningHall.setAdapter(adapter7);
+
+        ArrayAdapter<String> adapter8 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_4);
+        adapter8.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        bin.setAdapter(adapter8);
+
+        ArrayAdapter<String> adapter9 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_4);
+        adapter9.setDropDownViewResource(R.layout.item_dropdown_spinner);
+        window.setAdapter(adapter9);
+
+    }
+
     @SuppressLint("SetTextI18n")
     private void linkUi(View root) {
         saveGeneral = root.findViewById(R.id.button_save_inspection_general);
-        saveRooms = root.findViewById(R.id.button_save_rooms_inspection);
         noData = root.findViewById(R.id.no_data);
         inspectionContent = root.findViewById(R.id.cont_inspection);
         contbuttonRoomsInspection = root.findViewById(R.id.cont_rooms_inspection);
@@ -123,27 +329,28 @@ public class AddNewInspection extends Fragment {
 
         buttonRoomsInspection = root.findViewById(R.id.button_rooms_inspeciton);
         buttonRoomsInspection.setOnClickListener(v -> {
-            if (!individuals_expanded) {
-                contbuttonRoomsInspection.setVisibility(View.VISIBLE);
-                individuals_expanded = true;
-            } else {
-                contbuttonRoomsInspection.setVisibility(View.GONE);
-                individuals_expanded = false;
-            }
+            openIndividualInspection();
         });
 
         saveGeneral.setOnClickListener(v -> saveGeneralInspection());
 
-        saveRooms.setOnClickListener(v -> saveRoomsInspection());
 
+        String json = Pref.getValue(getActivity(), USER_PROFILE, null);
+        userProfile = new Gson().fromJson(json, UserProfile.class);
     }
 
-    private void saveRoomsInspection() {
-
+    private void openIndividualInspection() {
+        if (!individuals_expanded) {
+            contbuttonRoomsInspection.setVisibility(View.VISIBLE);
+            individuals_expanded = true;
+        } else {
+            contbuttonRoomsInspection.setVisibility(View.GONE);
+            individuals_expanded = false;
+        }
     }
 
-    private void sendRoomsInspection() {
 
+    private void sendGeneralInspection() {
         int total = 0;
         List<Score> scores = new ArrayList<>();
 
@@ -190,13 +397,11 @@ public class AddNewInspection extends Fragment {
                 total);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("general_inspections");
-        String key = reference.push().getKey();
         reference.push().setValue(inspection).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    snack("Saved Successfully");
-                    clearData();
+                    clearDataGeneralInspection();
                 } else {
                     snack(task.getException().getMessage());
                 }
@@ -205,13 +410,58 @@ public class AddNewInspection extends Fragment {
 
     }
 
-    private void clearData() {
+    private void clearDataGeneralInspection() {
+        snack("Saved Successfully");
 
+    }
+
+    UserProfile updatedProfile = null;
+
+    private void updateLastInspected() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("profiles/" + student.getId());
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserProfile profile = snapshot.getValue(UserProfile.class);
+                updatedProfile = profile;
+                updatedProfile.setLastInspected(new Date());
+                reference.setValue(updatedProfile).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            clearDateIndividualInspection();
+                        } else
+                            snack(task.getException().getMessage());
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                snack(error.getMessage());
+            }
+        });
+
+    }
+
+    private void clearDateIndividualInspection() {
+        snack("Saved Successfully");
+        dialog.dismiss();
+
+        refreshFragment();
+    }
+
+    private void refreshFragment() {
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        AddNewInspectionDirections.ActionNewInspectionToAddNewInspection action = AddNewInspectionDirections.actionNewInspectionToAddNewInspection(hallName);
+        action.setHallName(hallName);
+        navController.navigate(action);
+        individuals_expanded = false;
+        openIndividualInspection();
     }
 
     private boolean scoresEnsured() {
         boolean valid = false;
-
         if (fridge.getSelectedItemPosition() != 0 &&
                 kitchen.getSelectedItemPosition() != 0 &&
                 broom_cupboard.getSelectedItemPosition() != 0 &&
@@ -233,14 +483,12 @@ public class AddNewInspection extends Fragment {
             return;
         }
 
-        String json = Pref.getValue(getActivity(), USER_PROFILE, null);
-        userProfile = new Gson().fromJson(json, UserProfile.class);
         if (userProfile == null) {
             snack("Unknown Error!");
             return;
         }
 
-        sendRoomsInspection();
+        sendGeneralInspection();
     }
 
     Spinner fridge;

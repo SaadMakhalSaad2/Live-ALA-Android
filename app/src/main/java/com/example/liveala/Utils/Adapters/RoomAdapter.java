@@ -1,14 +1,17 @@
 package com.example.liveala.Utils.Adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,29 +22,47 @@ import androidx.annotation.RequiresApi;
 
 import com.example.liveala.R;
 import com.example.liveala.Activities.Home;
+import com.example.liveala.Utils.Models.IndividualInspection;
 import com.example.liveala.Utils.Models.Room;
+import com.example.liveala.Utils.Models.RoomsInspectionScore;
+import com.example.liveala.Utils.Models.Score;
 import com.example.liveala.Utils.Models.UserProfile;
+import com.example.liveala.fragments.AddNewInspection;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class RoomAdapter extends ArrayAdapter<Room> {
-    TextView studentName;
-    private ArrayList<UserProfile> profiles;
+    TextView studentName, textLastInspected;
+     UserProfile inspector, student;
+    private final ArrayList<UserProfile> profiles;
     Context context;
     AlertDialog dialog;
     Button save, exit;
     Spinner floor, beds, dinningHall, disk, bin, clothing, heater, window, spoiltFood, fridge;
+    Activity activity;
+    ImageView done;
 
-    public RoomAdapter(@NonNull Context context, int resource, ArrayList<UserProfile> profiles) {
+    public RoomAdapter(@NonNull Context context, int resource, ArrayList<UserProfile> profiles, UserProfile inspector, Activity activity) {
         super(context, resource);
         this.profiles = profiles;
         this.context = context;
+        this.inspector = inspector;
+        this.activity = activity;
     }
 
     @Override
     public int getCount() {
         return profiles.size();
     }
+
+    View dialogView;
 
     @NonNull
     @Override
@@ -51,20 +72,29 @@ public class RoomAdapter extends ArrayAdapter<Room> {
                     parent, false);
         }
 
-        UserProfile student = profiles.get(position);
-
+        student = profiles.get(position);
 
         studentName = convertView.findViewById(R.id.student_name);
+        textLastInspected = convertView.findViewById(R.id.text_last_inpsected);
+        done = convertView.findViewById(R.id.image_inspection_done);
         studentName.setText(student.getName());
-        studentName.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-            @Override
-            public void onClick(View v) {
-                showPopUp(student);
-            }
-        });
+
+        if (student.getLastInspected() != null)
+            textLastInspected.setText(getDateFormat(student.getLastInspected()));
 
         return convertView;
+    }
+
+    private String getDateFormat(Date lastInspected) {
+        String formattedDate = null;
+
+        if (DateUtils.isToday(lastInspected.getTime())) {
+            formattedDate = "Today";
+        } else {
+           formattedDate = android.text.format.DateFormat.format("LLL, dd hh:mm a", lastInspected).toString();
+        }
+
+        return formattedDate;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -75,6 +105,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         Home home = (Home) context;
         View view = home.getLayoutInflater().inflate(R.layout.popup_window, null);
         builder.setView(view);
+        dialogView = view;
 
         TextView studentName = view.findViewById(R.id.student_name_inspecting);
         studentName.setText("Inspecting " + student.getName());
@@ -82,19 +113,20 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         save = view.findViewById(R.id.button_save_inspection_dialog);
         exit = view.findViewById(R.id.button_exit_inspection_dialog);
 
-        exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(home, "Press long on the button to exit", Toast.LENGTH_SHORT).show();
-            }
+        exit.setOnClickListener(v -> Toast.makeText(home, "Press long on the button to exit", Toast.LENGTH_SHORT).show());
+
+        exit.setOnLongClickListener(v -> {
+            dialog.cancel();
+            return true;
         });
 
-        exit.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                dialog.cancel();
-                return true;
+        save.setOnClickListener(v -> {
+            if (!ensureData()) {
+                snack("You need to complete all criteria first");
+                return;
             }
+
+            sendInspection();
         });
 
         setupSpinners(view);
@@ -104,6 +136,96 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         dialog = builder.create();
         dialog.setCancelable(false);
         dialog.show();
+    }
+
+    private boolean ensureData() {
+        boolean valid = false;
+        if (floor.getSelectedItemPosition() != 0 &&
+                beds.getSelectedItemPosition() != 0 &&
+                dinningHall.getSelectedItemPosition() != 0 &&
+                disk.getSelectedItemPosition() != 0 &&
+                clothing.getSelectedItemPosition() != 0 &&
+                heater.getSelectedItemPosition() != 0 &&
+                window.getSelectedItemPosition() != 0 &&
+                spoiltFood.getSelectedItemPosition() != 0)
+            valid = true;
+
+        return valid;
+    }
+
+    private void sendInspection() {
+        calculateScore();
+
+        IndividualInspection inspection = new IndividualInspection(student,
+                inspector,
+                new Date(),
+                total,
+                scores);
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("individuals_inspections");
+        reference.push().setValue(inspection).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Snackbar.make(activity.findViewById(android.R.id.content), "Saved successfully!", Snackbar.LENGTH_LONG).show();
+                    clearData();
+                } else {
+                    Snackbar.make(activity.findViewById(android.R.id.content), task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+    }
+
+    List<Score> scores;
+    int total;
+
+    private void calculateScore() {
+        scores = new ArrayList<>();
+        total = 0;
+
+        Score floorScore = new Score("floor", Integer.parseInt(floor.getSelectedItem().toString()));
+        scores.add(floorScore);
+        total += Integer.parseInt(floor.getSelectedItem().toString());
+
+        Score bedsScore = new Score("beds", Integer.parseInt(beds.getSelectedItem().toString()));
+        scores.add(bedsScore);
+        total += Integer.parseInt(beds.getSelectedItem().toString());
+
+        Score dinningHallScore = new Score("dinning hall items", Integer.parseInt(dinningHall.getSelectedItem().toString()));
+        scores.add(dinningHallScore);
+        total += Integer.parseInt(dinningHall.getSelectedItem().toString());
+
+        Score diskCleanScore = new Score("disk clean", Integer.parseInt(disk.getSelectedItem().toString()));
+        scores.add(diskCleanScore);
+        total += Integer.parseInt(disk.getSelectedItem().toString());
+
+        Score binEmptyScore = new Score("bin empty", Integer.parseInt(bin.getSelectedItem().toString()));
+        scores.add(binEmptyScore);
+        total += Integer.parseInt(bin.getSelectedItem().toString());
+
+        Score clothingLyingAroundScore = new Score("clothing lying around", Integer.parseInt(clothing.getSelectedItem().toString()));
+        scores.add(clothingLyingAroundScore);
+        total += Integer.parseInt(clothing.getSelectedItem().toString());
+
+        Score heaterScore = new Score("heater", Integer.parseInt(heater.getSelectedItem().toString()));
+        scores.add(heaterScore);
+        total += Integer.parseInt(heater.getSelectedItem().toString());
+
+        Score windowSealScore = new Score("window seal", Integer.parseInt(window.getSelectedItem().toString()));
+        scores.add(windowSealScore);
+        total += Integer.parseInt(window.getSelectedItem().toString());
+
+        Score spoiltFoodScore = new Score("spoilt food", Integer.parseInt(spoiltFood.getSelectedItem().toString()));
+        scores.add(spoiltFoodScore);
+        total += Integer.parseInt(spoiltFood.getSelectedItem().toString());
+
+    }
+
+    private void clearData() {
+        dialog.dismiss();
+        done.setVisibility(View.VISIBLE);
     }
 
     private void setupSpinners(View view) {
@@ -158,6 +280,11 @@ public class RoomAdapter extends ArrayAdapter<Room> {
 
     }
 
+
+    public void snack(String message) {
+        Snackbar.make(dialogView, message, Snackbar.LENGTH_LONG).show();
+
+    }
 
 }
 

@@ -39,6 +39,10 @@
         <argument
             android:name="hallName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_newInspection_to_addNewInspection"
+            app:destination="@id/addNewInspection" />
+
     </fragment>
 
 </navigation>

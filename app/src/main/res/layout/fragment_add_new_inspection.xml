@@ -308,25 +308,12 @@
                     >
 
                 <ListView
-                    android:visibility="gone"
                     android:id="@+id/list_rooms"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:divider="@color/transparent" />
 
-                <Button
-                    android:enabled="false"
-                    android:id="@+id/button_save_rooms_inspection"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_marginRight="32dp"
-                    android:layout_marginLeft="32dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:backgroundTint="@color/green"
-                    android:text="Save"
-                    android:textAllCaps="false" />
             </LinearLayout>
 
             </LinearLayout>

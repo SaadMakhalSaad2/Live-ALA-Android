@@ -1,6 +1,7 @@
 package com.example.liveala.Utils.Models;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class UserProfile implements Serializable {
     public String userType;
@@ -10,8 +11,17 @@ public class UserProfile implements Serializable {
     public String name;
     public String id;
     public String imageUrl;
+    public Date lastInspected;
 
     public UserProfile() {
+    }
+
+    public Date getLastInspected() {
+        return lastInspected;
+    }
+
+    public void setLastInspected(Date lastInspected) {
+        this.lastInspected = lastInspected;
     }
 
     public String getHall() {
