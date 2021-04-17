@@ -34,13 +34,15 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class RoomAdapter extends ArrayAdapter<Room> {
     TextView studentName, textLastInspected;
-     UserProfile inspector, student;
+    UserProfile inspector, student;
     private final ArrayList<UserProfile> profiles;
     Context context;
     AlertDialog dialog;
@@ -87,12 +89,29 @@ public class RoomAdapter extends ArrayAdapter<Room> {
 
     private String getDateFormat(Date lastInspected) {
         String formattedDate = null;
+        long diff = 0;
 
-        if (DateUtils.isToday(lastInspected.getTime())) {
-            formattedDate = "Today";
+
+//           formattedDate = android.text.format.DateFormat.format("LLL, dd hh:mm a", lastInspected).toString();
+        diff = new Date().getTime() - lastInspected.getTime();
+
+        if (TimeUnit.MILLISECONDS.toMinutes(diff) > 0) {
+            if (TimeUnit.MILLISECONDS.toMinutes(diff) < 5)
+                formattedDate = "Just Now";
+            else if (TimeUnit.MILLISECONDS.toMinutes(diff) < 60)
+                formattedDate = TimeUnit.MILLISECONDS.toMinutes(diff) + " m";
         } else {
-           formattedDate = android.text.format.DateFormat.format("LLL, dd hh:mm a", lastInspected).toString();
+            formattedDate = "Just Now";
         }
+
+        if (TimeUnit.MILLISECONDS.toHours(diff) > 0) {
+            if (TimeUnit.MILLISECONDS.toHours(diff) < 24) {
+                formattedDate = TimeUnit.MILLISECONDS.toHours(diff) + " h";
+            }else {
+                formattedDate = TimeUnit.MILLISECONDS.toDays(diff) + " days";
+            }
+        }
+
 
         return formattedDate;
     }

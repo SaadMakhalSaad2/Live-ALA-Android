@@ -3,6 +3,7 @@ package com.example.liveala.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.liveala.MainActivity;
 import com.example.liveala.R;
@@ -55,6 +56,7 @@ public class Home extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     @Override

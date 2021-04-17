@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.example.liveala.R;
 import com.example.liveala.Utils.Adapters.RoomAdapter;
 import com.example.liveala.Utils.Models.GeneralInspection;
+import com.example.liveala.Utils.Models.Hall;
 import com.example.liveala.Utils.Models.IndividualInspection;
 import com.example.liveala.Utils.Models.Pref;
 import com.example.liveala.Utils.Models.Score;
@@ -75,6 +76,7 @@ public class AddNewInspection extends Fragment {
         return root;
     }
 
+    Hall hall;
     private void downloadStudents() {
         FirebaseDatabase.getInstance().getReference("profiles").addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -86,6 +88,7 @@ public class AddNewInspection extends Fragment {
                         students.add(profile);
                     }
                 }
+                hall = new Hall(hallName, students, userProfile);
                 progressBar.setVisibility(View.GONE);
                 if (!students.isEmpty()) {
                     RoomAdapter adp = new RoomAdapter(getActivity(), R.layout.item_room, (ArrayList<UserProfile>) students, userProfile, getActivity());
@@ -392,7 +395,7 @@ public class AddNewInspection extends Fragment {
         //TODO: get the value of the hall object
         GeneralInspection inspection = new GeneralInspection(new Date(),
                 userProfile,
-                null,
+                hall,
                 scores,
                 total);
 
@@ -412,6 +415,9 @@ public class AddNewInspection extends Fragment {
 
     private void clearDataGeneralInspection() {
         snack("Saved Successfully");
+
+        refreshFragment();
+
 
     }
 
@@ -458,6 +464,7 @@ public class AddNewInspection extends Fragment {
         navController.navigate(action);
         individuals_expanded = false;
         openIndividualInspection();
+        students = new ArrayList<>();
     }
 
     private boolean scoresEnsured() {

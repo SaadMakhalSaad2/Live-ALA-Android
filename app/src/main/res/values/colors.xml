@@ -16,6 +16,15 @@
     <color name="colorAccentLight">#fcf6d2</color>
 
 
-    <color name="green">#00BCD4</color>
+    <color name="blue">#00BCD4</color>
+
+    <color name="green">#4CAF50</color>
+
+    <color name="red">#F44336</color>
+
+    <color name="redt">#1AF44336</color>
+    <color name="greent">#1A4CAF50</color>
+
+
 
 </resources>

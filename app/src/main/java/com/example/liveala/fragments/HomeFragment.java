@@ -55,10 +55,18 @@ public class HomeFragment extends Fragment {
                     break;
                 case "student":
                     contCardsStudent.setVisibility(View.VISIBLE);
+                    setupStudentUi(root);
                     break;
             }
     }
 
+    private void setupStudentUi(View root) {
+        root.findViewById(R.id.card_my_scores).setOnClickListener(v -> {
+            navController.navigate(R.id.action_nav_home_to_studentInspections);
+        });
+    }
+
+    NavController navController;
     private void linkUi(View root) {
         TextView username = root.findViewById(R.id.text_username);
         TextView email = root.findViewById(R.id.text_user_email);
@@ -72,12 +80,11 @@ public class HomeFragment extends Fragment {
 
         contHeader.startAnimation(moveDown);
 
-        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         root.findViewById(R.id.card_new_inspection).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.action_nav_home_to_newInspection);
-
             }
         });
         root.findViewById(R.id.card_prev_inspections).setOnClickListener(new View.OnClickListener() {

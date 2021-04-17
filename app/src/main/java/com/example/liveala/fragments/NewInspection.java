@@ -28,16 +28,16 @@ public class NewInspection extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_new_inspection, container, false);
 
-        LinearLayout gridView = root.findViewById(R.id.grid_view);
-        Animation fade = AnimationUtils.loadAnimation(getActivity(), R.anim.fade);
-        gridView.startAnimation(fade);
-
         linkUi(root);
 
         return root;
     }
 
     private void linkUi(View root) {
+        LinearLayout gridView = root.findViewById(R.id.grid_view);
+        Animation fade = AnimationUtils.loadAnimation(getActivity(), R.anim.fade);
+        gridView.startAnimation(fade);
+
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         root.findViewById(R.id.titans).setOnClickListener(new View.OnClickListener() {
             @Override

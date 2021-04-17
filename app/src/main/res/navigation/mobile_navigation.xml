@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_nav_home_to_previousInspections"
             app:destination="@id/previousInspections" />
+        <action
+            android:id="@+id/action_nav_home_to_studentInspections"
+            app:destination="@id/studentInspections" />
     </fragment>
     <fragment
         android:id="@+id/newInspection"
@@ -43,6 +46,23 @@
             android:id="@+id/action_newInspection_to_addNewInspection"
             app:destination="@id/addNewInspection" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/studentInspections"
+        android:name="com.example.liveala.fragments.StudentInspections"
+        android:label="My Inspections" >
+        <action
+            android:id="@+id/action_studentInspections_to_extendedIndividualInspiction"
+            app:destination="@id/extendedIndividualInspiction" />
+    </fragment>
+    <fragment
+        android:id="@+id/extendedIndividualInspiction"
+        android:name="com.example.liveala.fragments.ExtendedIndividualInspiction"
+        android:label="Inspection Details"
+        tools:layout="@layout/fragment_extended_individual_inspiction">
+        <argument
+            android:name="inspection"
+            app:argType="com.example.liveala.Utils.Models.IndividualInspection" />
     </fragment>
 
 </navigation>

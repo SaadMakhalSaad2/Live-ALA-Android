@@ -6,12 +6,12 @@ import java.util.List;
 public class Hall implements Serializable {
     String hallName;
     List<UserProfile> students;
-    String patron;
+    UserProfile patron;
 
     public Hall() {
     }
 
-    public Hall(String hallName, List<UserProfile> students, String patron) {
+    public Hall(String hallName, List<UserProfile> students, UserProfile patron) {
         this.hallName = hallName;
         this.students = students;
         this.patron = patron;
@@ -25,7 +25,7 @@ public class Hall implements Serializable {
         return students;
     }
 
-    public String getPatron() {
+    public UserProfile getPatron() {
         return patron;
     }
 }
