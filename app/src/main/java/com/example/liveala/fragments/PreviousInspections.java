@@ -132,18 +132,8 @@ public class PreviousInspections extends Fragment {
         } else
             snack("Unknown error occurred!");
 
-        rooms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                snack("Coming soon");
-            }
-        });
-        general.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                snack("Coming soon");
-            }
-        });
+        rooms.setOnItemClickListener((parent, view, position, id) -> snack("Coming soon"));
+        general.setOnItemClickListener((parent, view, position, id) -> snack("Coming soon"));
 
     }
 
