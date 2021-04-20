@@ -37,7 +37,8 @@
                     style="@style/title_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Live ALA"
+                    android:text="Angalia"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/imageView"
                     app:layout_constraintStart_toStartOf="@+id/imageView"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />

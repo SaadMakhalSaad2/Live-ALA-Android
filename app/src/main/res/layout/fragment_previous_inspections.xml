@@ -3,8 +3,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
+
+   <LinearLayout
+            android:id="@+id/cont_inspections"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    style="@style/title_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Common Space Inspections"
+                    android:textColor="@color/colorAccent" />
+
+                <ProgressBar
+                    android:id="@+id/progress_load_general_inspections"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp" />
+
+                <TextView
+                    android:id="@+id/no_data_general_inspections"
+                    style="@style/title_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:padding="32dp"
+                    android:text="No Data!"
+                    android:textColor="@color/blue"
+                    android:visibility="gone"
+                    />
+
+
+                <ListView
+                    android:id="@+id/list_common_space_inspections"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_height="match_parent"
+                    android:divider="@color/transparent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:background="@color/colorPrimary"
+                    />
+
+                <TextView
+                    style="@style/title_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Students Inspections"
+                    android:textColor="@color/colorAccent" />
+
+                <ProgressBar
+                    android:id="@+id/progress_load_rooms_inspections"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp" />
+
+                <TextView
+                    android:id="@+id/no_data_rooms_inspections"
+                    style="@style/title_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:padding="32dp"
+                    android:text="No Data!"
+                    android:textColor="@color/blue"
+                    android:visibility="gone" />
+
+
+                <ListView
+                    android:id="@+id/list_rooms_inspections"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@color/transparent" />
+
+
+            </LinearLayout>
+        </LinearLayout>
 
 
 </LinearLayout>
