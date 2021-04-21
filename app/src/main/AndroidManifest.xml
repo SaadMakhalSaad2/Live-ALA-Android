@@ -10,10 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LiveALA">
         <activity
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:name=".Activities.Home"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.LiveALA.NoActionBar" />
         <activity
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"
             android:name=".MainActivity"
             android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
