@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RoomAdapter extends ArrayAdapter<Room> {
-    TextView studentName, textLastInspected;
+    TextView studentName, textLastInspected, nameNumber;
     UserProfile inspector, student;
     private final ArrayList<UserProfile> profiles;
     Context context;
@@ -78,13 +78,27 @@ public class RoomAdapter extends ArrayAdapter<Room> {
 
         studentName = convertView.findViewById(R.id.student_name);
         textLastInspected = convertView.findViewById(R.id.text_last_inpsected);
+        nameNumber = convertView.findViewById(R.id.name_number);
         done = convertView.findViewById(R.id.image_inspection_done);
         studentName.setText(student.getName());
+        nameNumber.setText(position + 1  + "");
 
         if (student.getLastInspected() != null)
             textLastInspected.setText(getDateFormat(student.getLastInspected()));
 
         return convertView;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
     }
 
     private String getDateFormat(Date lastInspected) {
@@ -107,7 +121,7 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         if (TimeUnit.MILLISECONDS.toHours(diff) > 0) {
             if (TimeUnit.MILLISECONDS.toHours(diff) < 24) {
                 formattedDate = TimeUnit.MILLISECONDS.toHours(diff) + " h";
-            }else {
+            } else {
                 formattedDate = TimeUnit.MILLISECONDS.toDays(diff) + " days";
             }
         }

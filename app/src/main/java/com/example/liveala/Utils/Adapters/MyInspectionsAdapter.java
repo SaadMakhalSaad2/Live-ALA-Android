@@ -43,7 +43,17 @@ public class MyInspectionsAdapter extends ArrayAdapter<IndividualInspection> {
         else
             return generalInspections.size();
     }
+    @Override
+    public int getViewTypeCount() {
 
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
     View dialogView;
 
     @SuppressLint("SetTextI18n")

@@ -51,7 +51,7 @@ public class NewInspection extends Fragment {
             @Override
             public void onClick(View v) {
                 NewInspectionDirections.ActionNewInspectionToAddNewInspection action = NewInspectionDirections.actionNewInspectionToAddNewInspection("athens");
-                action.setHallName("athens");
+                action.setHallName("athena");
                 navController.navigate(action);
             }
         });
@@ -60,7 +60,7 @@ public class NewInspection extends Fragment {
             @Override
             public void onClick(View v) {
                 NewInspectionDirections.ActionNewInspectionToAddNewInspection action = NewInspectionDirections.actionNewInspectionToAddNewInspection("clasified");
-                action.setHallName("clasified");
+                action.setHallName("classified");
                 navController.navigate(action);
             }
         });

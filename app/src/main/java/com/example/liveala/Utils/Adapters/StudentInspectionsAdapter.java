@@ -36,7 +36,17 @@ public class StudentInspectionsAdapter extends ArrayAdapter<IndividualInspection
     }
 
     View dialogView;
+    @Override
+    public int getViewTypeCount() {
 
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
