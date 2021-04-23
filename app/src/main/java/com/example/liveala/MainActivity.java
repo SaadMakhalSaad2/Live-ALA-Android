@@ -124,9 +124,11 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 UserProfile profile = snapshot.getValue(UserProfile.class);
 
-                if (profile.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                if (profile != null && profile.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                     Pref.setValue(MainActivity.this, USER_PROFILE, new Gson().toJson(profile));
                     startActivity(new Intent(MainActivity.this, Home.class));
+                }else {
+                    Snackbar.make(findViewById(android.R.id.content), "Registering your account was not completed! Contact the developer.", Snackbar.LENGTH_LONG).show();
                 }
             }
 

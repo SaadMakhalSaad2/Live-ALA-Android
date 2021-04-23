@@ -156,7 +156,7 @@ public class AddNewInspection extends Fragment {
 
         setupSpinners(view);
 
-        builder.setOnCancelListener(dialog2 -> Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show());
+       // builder.setOnCancelListener(dialog2 -> Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show());
 
         dialog = builder.create();
         dialog.setCancelable(false);
@@ -320,7 +320,6 @@ public class AddNewInspection extends Fragment {
             inspectionfor.setText(inspectionfor.getText() + hallName);
         general = root.findViewById(R.id.button_general_hall_rubric);
         general.setOnClickListener(v -> {
-            Toast.makeText(getActivity(), hallName, Toast.LENGTH_SHORT).show();
             if (!general_expanded) {
                 generalElements.setVisibility(View.VISIBLE);
                 general_expanded = true;
