@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Build;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,17 +23,15 @@ import com.example.liveala.R;
 import com.example.liveala.Activities.Home;
 import com.example.liveala.Utils.Models.IndividualInspection;
 import com.example.liveala.Utils.Models.Room;
-import com.example.liveala.Utils.Models.RoomsInspectionScore;
 import com.example.liveala.Utils.Models.Score;
 import com.example.liveala.Utils.Models.UserProfile;
-import com.example.liveala.fragments.AddNewInspection;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -104,8 +101,6 @@ public class RoomAdapter extends ArrayAdapter<Room> {
     private String getDateFormat(Date lastInspected) {
         String formattedDate = null;
         long diff = 0;
-
-
 //           formattedDate = android.text.format.DateFormat.format("LLL, dd hh:mm a", lastInspected).toString();
         diff = new Date().getTime() - lastInspected.getTime();
 
@@ -312,7 +307,6 @@ public class RoomAdapter extends ArrayAdapter<Room> {
         window.setAdapter(adapter9);
 
     }
-
 
     public void snack(String message) {
         Snackbar.make(dialogView, message, Snackbar.LENGTH_LONG).show();

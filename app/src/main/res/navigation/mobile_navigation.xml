@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_home_to_studentInspections"
             app:destination="@id/studentInspections" />
+        <action
+            android:id="@+id/action_nav_home_to_editRecords"
+            app:destination="@id/editRecords" />
     </fragment>
     <fragment
         android:id="@+id/newInspection"
@@ -64,5 +67,10 @@
             android:name="inspection"
             app:argType="com.example.liveala.Utils.Models.IndividualInspection" />
     </fragment>
+    <fragment
+        android:id="@+id/editRecords"
+        android:name="com.example.liveala.fragments.EditRecords"
+        android:label="fragment_edit_records"
+        tools:layout="@layout/fragment_edit_records" />
 
 </navigation>

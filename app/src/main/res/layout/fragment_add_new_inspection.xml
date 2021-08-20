@@ -7,7 +7,7 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical"
     android:padding="8dp"
-    tools:context=".fragments.AddNewInspection">
+    tools:context="com.example.liveala.fragments.AddNewInspection">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -277,13 +277,36 @@
 
                     </LinearLayout>
 
+                    <DatePicker
+                        android:visibility="gone"
+                        android:id="@+id/date_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        style="@style/title_2"
+                        android:textStyle="bold"
+                        android:textSize="24sp"
+                        android:id="@+id/show_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16sp"
+                        android:text="@string/change_date"
+                        android:layout_gravity="center"
+                        android:textColor="@color/blue"
+                      />
+
                     <Button
                         android:id="@+id/button_save_inspection_general"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:layout_marginRight="32dp"
                         android:layout_marginLeft="32dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginRight="32dp"
                         android:backgroundTint="@color/blue"
                         android:text="Save"
                         android:textAllCaps="false" />
@@ -300,21 +323,20 @@
 
 
                 <LinearLayout
+                    android:id="@+id/cont_rooms_inspection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    android:id="@+id/cont_rooms_inspection"
-                    >
+                    android:visibility="gone">
 
-                <ListView
-                    android:id="@+id/list_rooms"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:divider="@color/transparent" />
+                    <ListView
+                        android:id="@+id/list_rooms"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:divider="@color/transparent" />
 
-            </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
 

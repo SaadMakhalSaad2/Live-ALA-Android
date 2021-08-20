@@ -4,12 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -17,13 +15,11 @@ import android.widget.TextView;
 
 import com.example.liveala.R;
 import com.example.liveala.Utils.Adapters.MyInspectionsAdapter;
-import com.example.liveala.Utils.Adapters.RoomAdapter;
 import com.example.liveala.Utils.Models.GeneralInspection;
 import com.example.liveala.Utils.Models.IndividualInspection;
 import com.example.liveala.Utils.Models.Pref;
 import com.example.liveala.Utils.Models.UserProfile;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,7 +28,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.example.liveala.Utils.Models.Pref.USER_PROFILE;
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.example.liveala.fragments.EditRecords">
+
+    <TextView
+        android:id="@+id/student_name"
+        style="@style/title_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ahmed Sameh"
+        android:textSize="28sp" />
+
+    <EditText
+        android:inputType="number"
+        android:id="@+id/hallOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Hall Order" />
+
+    <Button
+        style="@style/button_primary"
+        android:id="@+id/button_save"
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:enabled="false"
+        android:textAllCaps="false"
+        />
+
+</LinearLayout>

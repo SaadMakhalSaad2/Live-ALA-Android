@@ -1,7 +1,5 @@
 package com.example.liveala.Utils.Models;
 
-import java.util.List;
-
 public class Room {
     String name;
     String hall;

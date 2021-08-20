@@ -65,4 +65,8 @@ dependencies {
     //expandable
     implementation 'com.github.iammert:ExpandableLayout:1.4.1'
 
+    //Date Picker
+    implementation 'com.github.Kunzisoft:Android-SwitchDateTimePicker:1.9'
+
+
 }

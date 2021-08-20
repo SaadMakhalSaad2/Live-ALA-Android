@@ -1,7 +1,6 @@
 package com.example.liveala.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +8,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -23,13 +18,9 @@ import com.bumptech.glide.Glide;
 import com.example.liveala.R;
 import com.example.liveala.Utils.Models.Pref;
 import com.example.liveala.Utils.Models.UserProfile;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 import com.google.gson.Gson;
 import com.mikhaellopez.circularimageview.CircularImageView;
-
-import java.util.Objects;
 
 import static com.example.liveala.Utils.Models.Pref.USER_PROFILE;
 
@@ -67,6 +58,7 @@ public class HomeFragment extends Fragment {
     }
 
     NavController navController;
+
     private void linkUi(View root) {
         TextView username = root.findViewById(R.id.text_username);
         TextView email = root.findViewById(R.id.text_user_email);
@@ -108,6 +100,12 @@ public class HomeFragment extends Fragment {
 //        else
 //            Snackbar.make(getActivity().getCurrentFocus(), "Error loading data", Snackbar.LENGTH_LONG).show();
 
+        root.findViewById(R.id.card_edit_records).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_nav_home_to_editRecords);
 
+            }
+        });
     }
 }

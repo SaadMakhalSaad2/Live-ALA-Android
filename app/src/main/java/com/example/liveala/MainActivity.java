@@ -34,11 +34,12 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.example.liveala.Utils.Models.Pref.USER_PROFILE;
-
 public class MainActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
+    public static final String SETTINGS_FILE = "IMPORTANT_SETTINGS";
+    public static final String INDIVIDUAL_DATE = "INDIVIDUAL_DATE";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
                 UserProfile profile = snapshot.getValue(UserProfile.class);
 
                 if (profile != null && profile.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                    Pref.setValue(MainActivity.this, USER_PROFILE, new Gson().toJson(profile));
+                    Pref.setValue(MainActivity.this, Pref.USER_PROFILE, new Gson().toJson(profile));
                     startActivity(new Intent(MainActivity.this, Home.class));
-                }else {
+                } else {
                     Snackbar.make(findViewById(android.R.id.content), "Registering your account was not completed! Contact the developer.", Snackbar.LENGTH_LONG).show();
                 }
             }
@@ -137,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 

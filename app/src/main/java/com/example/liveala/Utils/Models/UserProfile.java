@@ -12,12 +12,21 @@ public class UserProfile implements Serializable {
     public String id;
     public String imageUrl;
     public Date lastInspected;
+    public String hallOrder;
 
     public UserProfile() {
     }
 
     public Date getLastInspected() {
         return lastInspected;
+    }
+
+    public String getHallOrder() {
+        return hallOrder;
+    }
+
+    public void setHallOrder(String hallOrder) {
+        this.hallOrder = hallOrder;
     }
 
     public void setLastInspected(Date lastInspected) {

@@ -279,6 +279,33 @@
 
                 </LinearLayout>
 
+                <TextView
+                    style="@style/title_2"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:id="@+id/show_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16sp"
+                    android:text="@string/change_date"
+                    android:layout_gravity="center"
+                    android:textColor="@color/blue"
+                    />
+
+                <TextView
+                    style="@style/title_1"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="This is the date you set for the last inspection. Click it if you want to change it."
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/grey"
+                    />
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -291,7 +318,6 @@
                         style="@style/button_primary"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:text="Save"
 

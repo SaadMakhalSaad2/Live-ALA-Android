@@ -2,6 +2,7 @@ package com.example.liveala.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -23,8 +24,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.liveala.MainActivity;
 import com.example.liveala.R;
 import com.example.liveala.Utils.Adapters.RoomAdapter;
 import com.example.liveala.Utils.Models.GeneralInspection;
@@ -42,11 +43,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.liveala.Utils.Models.Pref.USER_PROFILE;
 
 public class AddNewInspection extends Fragment {
@@ -61,6 +66,7 @@ public class AddNewInspection extends Fragment {
     List<UserProfile> students = new ArrayList<>();
     ProgressBar progressBar;
     TextView noData;
+    Date mDate, mDateIndividual;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +83,7 @@ public class AddNewInspection extends Fragment {
     }
 
     Hall hall;
+
     private void downloadStudents() {
         FirebaseDatabase.getInstance().getReference("profiles").addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -91,6 +98,9 @@ public class AddNewInspection extends Fragment {
                 hall = new Hall(hallName, students, userProfile);
                 progressBar.setVisibility(View.GONE);
                 if (!students.isEmpty()) {
+                    Collections.sort(students, (obj1, obj2) -> {
+                        return obj1.getName().compareToIgnoreCase(obj2.getName()); // To compare string values
+                    });
                     RoomAdapter adp = new RoomAdapter(getActivity(), R.layout.item_room, (ArrayList<UserProfile>) students, userProfile, getActivity());
                     rooms.setAdapter(adp);
                     inspectionContent.setVisibility(View.VISIBLE);
@@ -115,6 +125,7 @@ public class AddNewInspection extends Fragment {
     private void setListener() {
         rooms.setOnItemClickListener((parent, view, position, id) -> {
             student = students.get(position);
+            retriedPreviousDate();
             showPopUp();
         });
     }
@@ -126,6 +137,7 @@ public class AddNewInspection extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @SuppressLint("SetTextI18n")
     private void showPopUp() {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         View view = getLayoutInflater().inflate(R.layout.popup_window, null);
@@ -135,11 +147,16 @@ public class AddNewInspection extends Fragment {
         TextView studentName = view.findViewById(R.id.student_name_inspecting);
         studentName.setText("Inspecting " + student.getName());
 
+        showDateIndividual = view.findViewById(R.id.show_date);
+        showDateIndividual.setOnClickListener(v -> showDatePicker("ss"));
+
+        if (mDateIndividual != null)
+            showDateIndividual.setText(android.text.format.DateFormat.format("dd MMMM yy hh:mm a", mDateIndividual));
+
         save = view.findViewById(R.id.button_save_inspection_dialog);
         exit = view.findViewById(R.id.button_exit_inspection_dialog);
 
         exit.setOnClickListener(v -> showSnackDialog("Press long on the button to exit"));
-
         exit.setOnLongClickListener(v -> {
             dialog.cancel();
             return true;
@@ -155,8 +172,6 @@ public class AddNewInspection extends Fragment {
         });
 
         setupSpinners(view);
-
-       // builder.setOnCancelListener(dialog2 -> Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show());
 
         dialog = builder.create();
         dialog.setCancelable(false);
@@ -176,9 +191,15 @@ public class AddNewInspection extends Fragment {
     private void sendIndividualInspection() {
         calculateScore();
 
+        Date date = null;
+        if (mDateIndividual != null) {
+            date = mDateIndividual;
+        } else
+            date = new Date();
+
         IndividualInspection inspection = new IndividualInspection(student,
                 userProfile,
-                new Date(),
+                date,
                 total,
                 scores);
 
@@ -392,21 +413,25 @@ public class AddNewInspection extends Fragment {
         total += Integer.parseInt(inspection_report.getSelectedItem().toString());
 
         //TODO: get the value of the hall object
-        GeneralInspection inspection = new GeneralInspection(new Date(),
+        Date date = null;
+        if (mDate != null) {
+            date = mDate;
+        } else
+            date = new Date();
+
+        GeneralInspection inspection = new GeneralInspection(
+                date,
                 userProfile,
                 hall,
                 scores,
                 total);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("general_inspections");
-        reference.push().setValue(inspection).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    clearDataGeneralInspection();
-                } else {
-                    snack(task.getException().getMessage());
-                }
+        reference.push().setValue(inspection).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                clearDataGeneralInspection();
+            } else {
+                snack(task.getException().getMessage());
             }
         });
 
@@ -416,8 +441,6 @@ public class AddNewInspection extends Fragment {
         snack("Saved Successfully");
 
         refreshFragment();
-
-
     }
 
     UserProfile updatedProfile = null;
@@ -464,6 +487,15 @@ public class AddNewInspection extends Fragment {
         individuals_expanded = false;
         openIndividualInspection();
         students = new ArrayList<>();
+        retriedPreviousDate();
+    }
+
+    private void retriedPreviousDate() {
+        SharedPreferences prefs = getActivity().getSharedPreferences(MainActivity.SETTINGS_FILE, MODE_PRIVATE);
+        long individualDateMillis = prefs.getLong(MainActivity.INDIVIDUAL_DATE, 0);
+        if (individualDateMillis != 0) {
+            mDateIndividual = new Date(individualDateMillis);
+        }
     }
 
     private boolean scoresEnsured() {
@@ -506,6 +538,9 @@ public class AddNewInspection extends Fragment {
     Spinner inspection_report;
     Spinner linen_change;
 
+    TextView showDateGeneral;
+    TextView showDateIndividual;
+
     private void setupAdapters(View root) {
         String[] scores_5 = getResources().getStringArray(R.array.scores_5);
         String[] scores_10 = getResources().getStringArray(R.array.scores_10);
@@ -518,6 +553,13 @@ public class AddNewInspection extends Fragment {
         hall_way = (Spinner) root.findViewById(R.id.hall_way);
         inspection_report = (Spinner) root.findViewById(R.id.inspection_report);
         linen_change = (Spinner) root.findViewById(R.id.linen_change);
+        showDateGeneral = root.findViewById(R.id.show_date);
+
+        showDateGeneral.setOnClickListener(v -> {
+
+            showDatePicker(null);
+
+        });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_5);
         adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
@@ -552,6 +594,59 @@ public class AddNewInspection extends Fragment {
         linen_change.setAdapter(adapter8);
 
     }
+
+    private void showDatePicker(String type) {
+        SwitchDateTimeDialogFragment dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
+                "Inspection Date",
+                "OK",
+                "Cancel"
+        );
+        dateTimeDialogFragment.startAtCalendarView();
+        dateTimeDialogFragment.set24HoursMode(false);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+
+        if (type == null) {
+            if (mDate == null)
+                dateTimeDialogFragment.setDefaultDateTime(calendar.getTime());
+            else
+                dateTimeDialogFragment.setDefaultDateTime(mDate);
+        } else {
+            if (mDateIndividual == null)
+                dateTimeDialogFragment.setDefaultDateTime(calendar.getTime());
+            else
+                dateTimeDialogFragment.setDefaultDateTime(mDateIndividual);
+        }
+
+
+        dateTimeDialogFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonClickListener() {
+            @Override
+            public void onPositiveButtonClick(Date date) {
+                if (type == null) {
+                    showDateGeneral.setText(android.text.format.DateFormat.format("dd MMMM yy hh:mm a", date));
+                    mDate = date;
+                } else {
+                    showDateIndividual.setText(android.text.format.DateFormat.format("dd MMMM yy hh:mm a", date));
+                    mDateIndividual = date;
+                    saveDate(date.getTime());
+                }
+            }
+
+            @Override
+            public void onNegativeButtonClick(Date date) {
+            }
+        });
+        dateTimeDialogFragment.show(
+
+                getFragmentManager(), "dialog_time");
+    }
+
+    private void saveDate(long millis) {
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences(MainActivity.SETTINGS_FILE, MODE_PRIVATE).edit();
+        editor.putLong(MainActivity.INDIVIDUAL_DATE, millis);
+        editor.apply();
+    }
+
 
     public void snack(String message) {
         Snackbar.make(getActivity().findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG).show();

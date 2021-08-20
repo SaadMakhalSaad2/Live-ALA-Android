@@ -85,7 +85,6 @@ public class StudentInspectionsAdapter extends ArrayAdapter<IndividualInspection
 
     }
 
-
     public void snack(String message) {
         Snackbar.make(dialogView, message, Snackbar.LENGTH_LONG).show();
     }
