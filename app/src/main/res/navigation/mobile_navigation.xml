@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_nav_home_to_editRecords"
             app:destination="@id/editRecords" />
+        <action
+            android:id="@+id/action_nav_home_to_reports"
+            app:destination="@id/reports" />
     </fragment>
     <fragment
         android:id="@+id/newInspection"
@@ -72,5 +75,23 @@
         android:name="com.example.liveala.fragments.EditRecords"
         android:label="fragment_edit_records"
         tools:layout="@layout/fragment_edit_records" />
+    <fragment
+        android:id="@+id/reports"
+        android:name="com.example.liveala.fragments.Reports"
+        android:label="Reports"
+        tools:layout="@layout/fragment_reports" >
+        <action
+            android:id="@+id/action_reports_to_reportsDetailed"
+            app:destination="@id/reportsDetailed" />
+    </fragment>
+    <fragment
+        android:id="@+id/reportsDetailed"
+        android:name="com.example.liveala.fragments.ReportsDetailed"
+        android:label="Reports"
+        tools:layout="@layout/fragment_reports_detailed" >
+        <argument
+            android:name="hallName"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

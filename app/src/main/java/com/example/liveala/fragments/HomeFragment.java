@@ -107,5 +107,12 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+        root.findViewById(R.id.card_reports).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_nav_home_to_reports);
+            }
+        });
     }
 }
