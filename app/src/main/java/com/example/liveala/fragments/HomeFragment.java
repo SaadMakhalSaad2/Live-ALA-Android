@@ -45,6 +45,9 @@ public class HomeFragment extends Fragment {
                     contCardsInspector.setVisibility(View.VISIBLE);
                     break;
                 case "student":
+                    root.findViewById(R.id.card_new_inspection).setVisibility(View.INVISIBLE);
+
+                    root.findViewById(R.id.card_reports).setVisibility(View.INVISIBLE);
                     contCardsStudent.setVisibility(View.VISIBLE);
                     setupStudentUi(root);
                     break;

@@ -25,6 +25,8 @@
     <string name="eight">8</string>
     <string name="nine">9</string>
     <string name="ten">10</string>
+    <string name="negative_ten">-10</string>
+
 
 
     <string name="choose_score">Choose Score</string>
@@ -39,6 +41,41 @@
         <item>@string/five</item>
 
     </array>
+
+    <array name="scores_zero_five">
+        <item>@string/choose_score</item>
+        <item>@string/zero</item>
+        <item>@string/five</item>
+    </array>
+
+    <array name="scores_zero_four">
+        <item>@string/choose_score</item>
+        <item>@string/zero</item>
+        <item>@string/four</item>
+    </array>
+
+    <array name="scores_zero_two_four">
+        <item>@string/choose_score</item>
+        <item>@string/zero</item>
+        <item>@string/two</item>
+        <item>@string/four</item>
+    </array>
+
+    <array name="scores_zero_one_two_three">
+        <item>@string/choose_score</item>
+        <item>@string/zero</item>
+        <item>@string/one</item>
+        <item>@string/two</item>
+        <item>@string/three</item>
+
+    </array>
+
+    <array name="scores_ten_negative_ten">
+        <item>@string/choose_score</item>
+        <item>@string/ten</item>
+        <item>@string/negative_ten</item>
+    </array>
+
 
     <array name="scores_2">
         <item>@string/choose_score</item>

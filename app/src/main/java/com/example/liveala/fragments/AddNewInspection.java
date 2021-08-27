@@ -50,6 +50,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.liveala.Utils.Models.Pref.USER_PROFILE;
@@ -101,7 +102,7 @@ public class AddNewInspection extends Fragment {
                     Collections.sort(students, (obj1, obj2) -> {
                         return obj1.getName().compareToIgnoreCase(obj2.getName()); // To compare string values
                     });
-                    RoomAdapter adp = new RoomAdapter(getActivity(), R.layout.item_room, (ArrayList<UserProfile>) students, userProfile, getActivity());
+                    RoomAdapter adp = new RoomAdapter(Objects.requireNonNull(getActivity()), R.layout.item_room, (ArrayList<UserProfile>) students, userProfile, getActivity());
                     rooms.setAdapter(adp);
                     inspectionContent.setVisibility(View.VISIBLE);
                     noData.setVisibility(View.GONE);
@@ -279,6 +280,11 @@ public class AddNewInspection extends Fragment {
         String[] scores_2 = getActivity().getResources().getStringArray(R.array.scores_2);
         String[] scores_4 = getActivity().getResources().getStringArray(R.array.scores_4);
 
+        String[] scores_0_4 = getResources().getStringArray(R.array.scores_zero_four);
+        String[] scores_0_2_4 = getResources().getStringArray(R.array.scores_zero_two_four);
+        String[] scores_0_1_2_3 = getResources().getStringArray(R.array.scores_zero_one_two_three);
+
+
         floor = view.findViewById(R.id.floor);
         beds = view.findViewById(R.id.beds);
         dinningHall = view.findViewById(R.id.dinning_hall_items_dialog);
@@ -301,7 +307,7 @@ public class AddNewInspection extends Fragment {
         adapter3.setDropDownViewResource(R.layout.item_dropdown_spinner);
         clothing.setAdapter(adapter3);
 
-        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_2);
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_0_1_2_3);
         adapter4.setDropDownViewResource(R.layout.item_dropdown_spinner);
         heater.setAdapter(adapter4);
 
@@ -309,15 +315,15 @@ public class AddNewInspection extends Fragment {
         adapter5.setDropDownViewResource(R.layout.item_dropdown_spinner);
         spoiltFood.setAdapter(adapter5);
 
-        ArrayAdapter<String> adapter6 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_4);
+        ArrayAdapter<String> adapter6 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_0_2_4);
         adapter6.setDropDownViewResource(R.layout.item_dropdown_spinner);
         beds.setAdapter(adapter6);
 
-        ArrayAdapter<String> adapter7 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_4);
+        ArrayAdapter<String> adapter7 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_0_4);
         adapter7.setDropDownViewResource(R.layout.item_dropdown_spinner);
         dinningHall.setAdapter(adapter7);
 
-        ArrayAdapter<String> adapter8 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_4);
+        ArrayAdapter<String> adapter8 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_0_4);
         adapter8.setDropDownViewResource(R.layout.item_dropdown_spinner);
         bin.setAdapter(adapter8);
 
@@ -541,9 +547,13 @@ public class AddNewInspection extends Fragment {
     TextView showDateGeneral;
     TextView showDateIndividual;
 
+
+
     private void setupAdapters(View root) {
         String[] scores_5 = getResources().getStringArray(R.array.scores_5);
         String[] scores_10 = getResources().getStringArray(R.array.scores_10);
+        String[] scores_ten_negative_ten = getResources().getStringArray(R.array.scores_ten_negative_ten);
+        String[] scores_0_5 = getResources().getStringArray(R.array.scores_zero_five);
 
         fridge = (Spinner) root.findViewById(R.id.fridge);
         kitchen = (Spinner) root.findViewById(R.id.kitchen);
@@ -573,7 +583,7 @@ public class AddNewInspection extends Fragment {
         adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
         kitchen.setAdapter(adapter3);
 
-        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_10);
+        ArrayAdapter<String> adapter4 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_ten_negative_ten);
         adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
         dinning_hall.setAdapter(adapter4);
 
@@ -589,7 +599,7 @@ public class AddNewInspection extends Fragment {
         adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
         hall_way.setAdapter(adapter7);
 
-        ArrayAdapter<String> adapter8 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_5);
+        ArrayAdapter<String> adapter8 = new ArrayAdapter<>(getActivity(), R.layout.item_spinner, scores_0_5);
         adapter.setDropDownViewResource(R.layout.item_dropdown_spinner);
         linen_change.setAdapter(adapter8);
 
